@@ -421,6 +421,101 @@
     }
 
     /* ═══════════════════════════════════════
+       VIDEO TESTIMONIALS
+    ═══════════════════════════════════════ */
+    .videos-section { background: var(--primary-dk); transition: background .35s; overflow: hidden; }
+    [data-theme="dark"] .videos-section { background: var(--bg); }
+
+    .videos-section .section-tag { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
+    .videos-section .section-heading { color: #fff; }
+    .videos-section .section-heading em { color: #7dd4fc; }
+    .videos-section .section-sub { color: rgba(255,255,255,.6); }
+
+    [data-theme="dark"] .videos-section .section-tag { background: var(--tag-bg); color: var(--primary); }
+    [data-theme="dark"] .videos-section .section-heading { color: var(--text); }
+    [data-theme="dark"] .videos-section .section-heading em { color: var(--primary); }
+    [data-theme="dark"] .videos-section .section-sub { color: var(--text-muted); }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      margin-top: 3rem;
+    }
+
+    .video-card {
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      transition: transform .25s, box-shadow .25s;
+    }
+    [data-theme="dark"] .video-card { background: var(--card-bg); border-color: var(--divider); }
+    .video-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,.35); }
+
+    /* Responsive 16:9 iframe wrapper */
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Placeholder sits on top of the iframe until real ID is added.
+       Once you delete the placeholder div, the iframe shows through. */
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, rgba(21,83,168,.4) 0%, rgba(21,122,82,.3) 100%);
+      z-index: 2;
+      text-decoration: none;
+    }
+    .video-placeholder:hover .play-btn { transform: scale(1.12); }
+    .play-btn {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      border: 2px solid rgba(255,255,255,.4);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .25s;
+      backdrop-filter: blur(6px);
+    }
+    .play-btn svg { width: 24px; height: 24px; fill: #fff; margin-left: 4px; }
+    .video-placeholder-label {
+      font-family: 'Fraunces', serif;
+      font-size: .85rem; font-style: italic;
+      color: rgba(255,255,255,.75); text-align: center; padding: 0 1rem;
+    }
+
+    .video-meta {
+      padding: 1.2rem 1.4rem;
+    }
+    .video-person {
+      font-family: 'Fraunces', serif;
+      font-size: .95rem; font-weight: 700;
+      color: rgba(255,255,255,.9); line-height: 1.2;
+    }
+    [data-theme="dark"] .video-person { color: var(--text); }
+    .video-role { font-size: .73rem; color: var(--green); font-weight: 500; margin-top: .2rem; }
+
+    @media (max-width: 768px) {
+      .videos-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════
        NEWSLETTER STRIP
     ═══════════════════════════════════════ */
     .newsletter-strip {
@@ -526,8 +621,12 @@
     @keyframes fadeInRight { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
 
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* Animations — elements only hidden if JS is active (.js on <html>).
+       Without JS, or before JS runs, everything is fully visible. */
+    .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .js .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* Non-JS fallback: always visible */
+    .reveal { opacity: 1; transform: none; }
     .reveal-d1 { transition-delay: .1s; }
     .reveal-d2 { transition-delay: .2s; }
     .reveal-d3 { transition-delay: .3s; }
@@ -568,6 +667,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#process">Process</a></li>
         <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#videos">Videos</a></li>
         <li><a href="#faqs">FAQs</a></li>
         <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
       </ul>
@@ -710,6 +810,55 @@
     </div>
   </section>
 
+  <!-- ─── VIDEO TESTIMONIALS ─── -->
+  <section class="videos-section" id="videos">
+    <span class="section-tag reveal">Full Testimonials</span>
+    <h2 class="section-heading reveal reveal-d1">Watch my clients' stories <em>in their own words.</em></h2>
+    <p class="section-sub reveal reveal-d2">These are real conversations with real people whose stories Zachary helped preserve.</p>
+
+    <div class="videos-grid">
+
+      <!-- ── VIDEO 1 — James Gordon Warmbrod, Jr. ── -->
+      <div class="video-card reveal reveal-d2">
+        <div class="video-wrap">
+
+          <iframe
+            src="https://player.vimeo.com/video/1118393979?h=32f78c8e92&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            title="James Gordon Warmbrod Jr. — Franklin Life Scribe Testimonial">
+          </iframe>
+
+        </div>
+        <div class="video-meta">
+          <div class="video-person">James Gordon Warmbrod, Jr.</div>
+          <div class="video-role">Retired Orthopedic Surgeon</div>
+        </div>
+      </div>
+
+      <!-- ── VIDEO 2 — Barbara White ── -->
+      <div class="video-card reveal reveal-d3">
+        <div class="video-wrap">
+
+          <iframe
+            src="https://player.vimeo.com/video/1118393977?h=35532ed808&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            title="Barbara White — Franklin Life Scribe Testimonial">
+          </iframe>
+
+        </div>
+        <div class="video-meta">
+          <div class="video-person">Barbara White</div>
+          <div class="video-role">Mother of three</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ─── NEWSLETTER ─── -->
   <div class="newsletter-strip">
     <div>
@@ -731,7 +880,7 @@
       <div class="faq-sidebar reveal reveal-d2">
         <p>Have a question not answered here? Reach out directly and I'll get back to you promptly.</p>
         <div class="faq-nudge">
-          <p>Ready to get started or just curious? <a href="mailto:zachary@authorholbrook.com">Email Zachary</a> — the first meeting is always free.</p>
+          <p>Ready to get started or just curious? <a href="/cdn-cgi/l/email-protection#b8c2d9dbd0d9cac1f8d9cdccd0d7cad0d7d4dacad7d7d396dbd7d5">Email Zachary</a> — the first meeting is always free.</p>
         </div>
       </div>
 
@@ -811,7 +960,7 @@
       </p>
       <div class="contact-detail">
         <span class="contact-detail-label">Email</span>
-        <span class="contact-detail-value"><a href="mailto:zachary@authorholbrook.com">zachary@authorholbrook.com</a></span>
+        <span class="contact-detail-value"><a href="/cdn-cgi/l/email-protection#176d76747f76656e577662637f78657f787b756578787c3974787a"><span class="__cf_email__" data-cfemail="b6ccd7d5ded7c4cff6d7c3c2ded9c4ded9dad4c4d9d9dd98d5d9db">[email&#160;protected]</span></a></span>
       </div>
       <div class="contact-detail">
         <span class="contact-detail-label">Location</span>
@@ -859,12 +1008,12 @@
       <li><a href="#about">About</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#faqs">FAQs</a></li>
-      <li><a href="mailto:zachary@authorholbrook.com">Contact</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#9de7fcfef5fcefe4ddfce8e9f5f2eff5f2f1ffeff2f2f6b3fef2f0">Contact</a></li>
     </ul>
     <span class="footer-copy">© <span id="yr"></span> Franklin Life Scribe. All rights reserved.</span>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     /* ── Year ── */
     document.getElementById('yr').textContent = new Date().getFullYear();
 
@@ -876,7 +1025,29 @@
       document.getElementById('toggleEmoji').textContent = dark ? '🌙' : '☀️';
     }
 
-    /* ── FAQ Accordion — measures real scrollHeight ── */
+    /* ── Scroll Reveal ──
+       Step 1: add .js to <html> so CSS hides elements (progressive enhancement)
+       Step 2: IntersectionObserver makes them visible as they enter the viewport
+       Step 3: Safety net — reveal everything after 1.5 s in case observer stalls */
+    document.documentElement.classList.add('js');
+
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target); // stop watching once visible
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // Safety net: if anything still hidden after 1.5 s, force it visible
+    setTimeout(() => {
+      revealEls.forEach(el => el.classList.add('visible'));
+    }, 1500);
     function toggleFaq(btn) {
       const item = btn.closest('.faq-item');
       const body = item.querySelector('.faq-body');
@@ -904,25 +1075,7 @@
       }
     }
 
-    /* ── Scroll Reveal ── */
-    const revealObs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
-
     /* ── Newsletter ── */
     function handleNl(e) {
       e.preventDefault();
-      document.getElementById('nlForm').style.display = 'none';
-      document.getElementById('nlSuccess').style.display = 'block';
-    }
-
-    /* ── Contact Form ── */
-    function handleContact(e) {
-      e.preventDefault();
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    }
-  </script>
-</body>
-</html>
+      document.getElementById('nlForm').style.displa
